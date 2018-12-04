@@ -105,6 +105,8 @@ func writeStructs(schemas []ColumnSchema) (int, error) {
 		header = header + ")\n\n"
 	}
 
+	header += "// END-HEADER \n\n"
+
 	totalBytes, err := fmt.Fprint(file, header+out)
 	if err != nil {
 		log.Fatal(err)
