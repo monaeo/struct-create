@@ -53,7 +53,15 @@ type ColumnSchema struct {
 }
 
 func writeStructs(schemas []ColumnSchema) (int, error) {
-	file, err := os.Create("db_structs.go")
+	var filename string
+	if outputFile != nil {
+		filename = *outputFile
+	}
+	if filename == "" {
+		filename = "db_structs.go"
+	}
+
+	file, err := os.Create(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -205,6 +213,7 @@ func goType(col *ColumnSchema) (string, string, error) {
 }
 
 var configFile = flag.String("json", "", "Config file")
+var outputFile = flag.String("out", "", "Path to output file")
 
 func main() {
 	flag.Parse()
